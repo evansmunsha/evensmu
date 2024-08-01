@@ -9,12 +9,13 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useDropzone } from "@uploadthing/react";
-import { ImageIcon, Loader2, X } from "lucide-react";
+import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 import { ClipboardEvent, useRef } from "react";
 import { useSubmitPostMutation } from "./mutations";
 import "./styles.css";
 import useMediaUpload, { Attachment } from "./useMediaUpload";
+import Loading from "@/app/(main)/loading";
 
 export default function PostEditor() {
   const { user } = useSession();
@@ -101,7 +102,9 @@ export default function PostEditor() {
         {isUploading && (
           <>
             <span className="text-sm">{uploadProgress ?? 0}%</span>
-            <Loader2 className="size-5 animate-spin text-primary" />
+            <div className="flex items-center justify-center mx-auto h-auto">
+                <Loading />
+              </div>
           </>
         )}
         <AddAttachmentsButton

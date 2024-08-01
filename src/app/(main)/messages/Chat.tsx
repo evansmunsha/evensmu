@@ -1,12 +1,12 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { Chat as StreamChat } from "stream-chat-react";
 import ChatChannel from "./ChatChannel";
 import ChatSidebar from "./ChatSidebar";
 import useInitializeChatClient from "./useInitializeChatClient";
+import Loading from "../loading";
 
 export default function Chat() {
   const chatClient = useInitializeChatClient();
@@ -16,7 +16,9 @@ export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   if (!chatClient) {
-    return <Loader2 className="mx-auto my-3 animate-spin" />;
+    return <div className="flex items-center justify-center mx-auto h-[70vh]">
+    <Loading />
+  </div>
   }
 
   return (

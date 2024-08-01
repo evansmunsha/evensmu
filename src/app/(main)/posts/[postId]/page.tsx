@@ -6,11 +6,11 @@ import UserAvatar from "@/components/UserAvatar";
 import UserTooltip from "@/components/UserTooltip";
 import prisma from "@/lib/prisma";
 import { getPostDataInclude, UserData } from "@/lib/types";
-import { Loader2 } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache, Suspense } from "react";
+import Loading from "../../loading";
 
 interface PageProps {
   params: { postId: string };
@@ -62,7 +62,11 @@ export default async function Page({ params: { postId } }: PageProps) {
         <Post post={post} />
       </div>
       <div className="sticky top-[5.25rem] hidden h-fit w-80 flex-none lg:block">
-        <Suspense fallback={<Loader2 className="mx-auto animate-spin" />}>
+        <Suspense fallback={(
+            <div className="flex items-center justify-center mx-auto h-[100vh]">
+              <Loading />
+            </div>
+          )}>
           <UserInfoSidebar user={post.user} />
         </Suspense>
       </div>
@@ -80,8 +84,8 @@ async function UserInfoSidebar({ user }: UserInfoSidebarProps) {
   if (!loggedInUser) return null;
 
   return (
-    <div className="space-y-5 rounded-2xl bg-card p-5 shadow-sm">
-      <div className="text-xl font-bold">About this user</div>
+    <div className="space-y-5 rounded bg-card p-5 shadow-sm">
+      <div className="text-xl font-bold">About this author</div>
       <UserTooltip user={user}>
         <Link
           href={`/users/${user.username}`}

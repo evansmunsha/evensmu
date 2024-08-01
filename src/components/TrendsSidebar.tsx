@@ -2,18 +2,20 @@ import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { getUserDataSelect } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import { Suspense } from "react";
 import FollowButton from "./FollowButton";
 import UserAvatar from "./UserAvatar";
 import UserTooltip from "./UserTooltip";
+import Loading from "@/app/(main)/loading";
 
 export default function TrendsSidebar() {
   return (
     <div className="sticky top-[5.25rem] hidden h-fit w-72 flex-none space-y-5 md:block lg:w-80">
-      <Suspense fallback={<Loader2 className="mx-auto animate-spin" />}>
+      <Suspense fallback={<div className="flex items-center justify-center mx-auto h-[100vh]">
+            <Loading />
+          </div>}>
         <WhoToFollow />
         <TrendingTopics />
       </Suspense>

@@ -9,9 +9,9 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import Notification from "./Notification";
+import Loading from "../loading";
 
 export default function Notifications() {
   const {
@@ -82,7 +82,9 @@ export default function Notifications() {
       {notifications.map((notification) => (
         <Notification key={notification.id} notification={notification} />
       ))}
-      {isFetchingNextPage && <Loader2 className="mx-auto my-3 animate-spin" />}
+      {isFetchingNextPage && <div className="flex items-center justify-center mx-auto h-[100vh]">
+          <Loading />
+        </div>}
     </InfiniteScrollContainer>
   );
 }

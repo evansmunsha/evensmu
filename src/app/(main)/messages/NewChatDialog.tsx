@@ -10,11 +10,12 @@ import { useToast } from "@/components/ui/use-toast";
 import UserAvatar from "@/components/UserAvatar";
 import useDebounce from "@/hooks/useDebounce";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Check, Loader2, SearchIcon, X } from "lucide-react";
+import { Check, SearchIcon, X } from "lucide-react";
 import { useState } from "react";
 import { UserResponse } from "stream-chat";
 import { DefaultStreamChatGenerics, useChatContext } from "stream-chat-react";
 import { useSession } from "../SessionProvider";
+import Loading from "../loading";
 
 interface NewChatDialogProps {
   onOpenChange: (open: boolean) => void;
@@ -139,7 +140,9 @@ export default function NewChatDialog({
                 No users found. Try a different name.
               </p>
             )}
-            {isFetching && <Loader2 className="mx-auto my-3 animate-spin" />}
+            {isFetching && <div className="flex items-center justify-center mx-auto h-[40vh]">
+                <Loading />
+              </div>}
             {isError && (
               <p className="my-3 text-center text-destructive">
                 An error occurred while loading users.

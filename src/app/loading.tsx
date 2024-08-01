@@ -1,5 +1,12 @@
-import { Loader2 } from "lucide-react";
+
+import Image from "next/image";
 
 export default function Loading() {
-  return <Loader2 className="mx-auto my-3 animate-spin" />;
+  return (
+    <div className="mx-auto items-center flex h-[100vh] justify-center">
+
+      <Image src='/thumbnail.png' width={40} height={40} alt='logo' className=' mx-auto animate-spin rounded-full ' />
+    </div>
+
+  ); 
 }

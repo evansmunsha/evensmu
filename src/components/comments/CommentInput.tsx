@@ -1,9 +1,10 @@
 import { PostData } from "@/lib/types";
-import { Loader2, SendHorizonal } from "lucide-react";
+import { SendHorizonal } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useSubmitCommentMutation } from "./mutations";
+import Loading from "@/app/(main)/loading";
 
 interface CommentInputProps {
   post: PostData;
@@ -47,7 +48,9 @@ export default function CommentInput({ post }: CommentInputProps) {
         {!mutation.isPending ? (
           <SendHorizonal />
         ) : (
-          <Loader2 className="animate-spin" />
+          <div className="flex items-center justify-center mx-auto h-auto]">
+            <Loading />
+          </div>
         )}
       </Button>
     </form>
