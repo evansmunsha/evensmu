@@ -26,8 +26,8 @@ export default function Post({ post }: PostProps) {
   const [showComments, setShowComments] = useState(false);
 
   return (
-    <article className="group/post space-y-1 rounded bg-card p-2 shadow-sm">
-      <div className="flex justify-between gap-3">
+    <article className="group/post space-y-3 rounded bg-card py-5 shadow-sm">
+      <div className="flex px-1 justify-between gap-3">
         <div className="flex flex-wrap gap-3">
           <UserTooltip user={post.user}>
             <Link href={`/users/${post.user.username}`}>
@@ -52,27 +52,25 @@ export default function Post({ post }: PostProps) {
             </Link>
           </div>
         </div>
-
-          {post.user.id === user.id && (
-            <PostMoreButton
-              post={post}
-              className="opacity-0 transition-opacity group-hover/post:opacity-100"
-            />
-          )}
-        
+        {post.user.id === user.id && (
+          <PostMoreButton
+            post={post}
+            className="opacity-0 transition-opacity group-hover/post:opacity-100"
+          />
+        )}
       </div>
       <Linkify>
-        <div className="whitespace-pre-line break-words">{post.content}</div>
+        <div className="whitespace-pre-line break-words p-1">{post.content}</div>
       </Linkify>
       <Link
-        href={`/posts/${post.id}`}>
-          {!!post.attachments.length && (
+        href={`/posts/${post.id}`}
+      >
+        {!!post.attachments.length && (
           <MediaPreviews attachments={post.attachments} />
         )}
       </Link>
-      
-      <hr className="text-muted-foreground mt-2" />
-      <div className="flex justify-between gap-5">
+      <hr className="text-muted-foreground" />
+      <div className="flex p-1 justify-between gap-5">
         <div className="flex items-center gap-5">
           <LikeButton
             postId={post.id}
@@ -85,7 +83,7 @@ export default function Post({ post }: PostProps) {
             post={post}
             onClick={() => setShowComments(!showComments)}
           />
-        </div>
+        </div> 
         <BookmarkButton
           postId={post.id}
           initialState={{

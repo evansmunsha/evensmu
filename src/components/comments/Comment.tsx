@@ -14,7 +14,7 @@ export default function Comment({ comment }: CommentProps) {
   const { user } = useSession();
 
   return (
-    <div className="group/comment flex gap-3 py-3">
+    <div className="group/comment flex gap-3 px-2 py-3">
       <span className="hidden sm:inline">
         <UserTooltip user={comment.user}>
           <Link href={`/users/${comment.user.username}`}>

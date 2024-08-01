@@ -78,9 +78,9 @@ export default function EditProfileDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Edit your profile</DialogTitle>
         </DialogHeader>
-        <div className="space-y-1.5">
+        <div className="border-4 border-red-700 ">
           <Label>Avatar</Label>
           <AvatarInput
             src={
@@ -114,7 +114,7 @@ export default function EditProfileDialog({
                   <FormLabel>Bio</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Tell us a little bit about yourself"
+                      placeholder="Tell people a bit about yourself"
                       className="resize-none"
                       {...field}
                     />
