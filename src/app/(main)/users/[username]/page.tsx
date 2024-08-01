@@ -63,10 +63,10 @@ export default async function Page({ params: { username } }: PageProps) {
 
   return (
     <main className="flex w-full min-w-0 gap-5">
-      <div className="w-full min-w-0 space-y-5">
+      <div className="w-full min-w-0 space-y-3">
         <UserProfile user={user} loggedInUserId={loggedInUser.id} />
-        <div className="rounded-2xl bg-card p-5 shadow-sm">
-          <h2 className="text-center text-2xl font-bold">
+        <div className="rounded bg-card p-2 shadow-sm">
+          <h2 className="text-center text-lg font-bold">
             {user.displayName}&apos;s posts
           </h2>
         </div>
@@ -91,45 +91,60 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
   };
 
   return (
-    <div className="h-fit w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm">
-      <UserAvatar
-        avatarUrl={user.avatarUrl}
-        size={250}
-        className="mx-auto size-full max-h-60 max-w-60 rounded-full"
-      />
-      <div className="flex flex-wrap gap-3 sm:flex-nowrap">
-        <div className="me-auto space-y-3">
-          <div>
-            <h1 className="text-3xl font-bold">{user.displayName}</h1>
-            <div className="text-muted-foreground">@{user.username}</div>
-          </div>
-          <div>Member since {formatDate(user.createdAt, "MMM d, yyyy")}</div>
-          <div className="flex items-center gap-3">
-            <span>
-              Posts:{" "}
-              <span className="font-semibold">
-                {formatNumber(user._count.posts)}
-              </span>
-            </span>
-            <FollowerCount userId={user.id} initialState={followerInfo} />
+    <div className="h-fit w-full space-y-5 rounded bg-card p-2 shadow-sm">
+      <div className="flex flex-col">
+
+        <div className=" md:flex w-full">
+          <UserAvatar
+            avatarUrl={user.avatarUrl}
+            size={250}
+            className="size-full max-h-32 max-w-32 rounded-full"
+          />
+
+
+          <div className="flex flex-wrap items-end justify-end gap-3 sm:flex-nowrap flex-1">
+            <div className="w-full items-center space-y-3 flex-col flex">
+              <div className=" float-end">
+                <h1 className="text-xl text-red-500 font-bold">{user.displayName}</h1>
+                <div className="text-muted-foreground">@{user.username}</div>
+              </div>
+              <div className="text-center float-end">Participant since {formatDate(user.createdAt, "MMM d, yyyy")}</div>
+              <div className=" float-end flex items-center gap-3">
+                <span>
+                  Posts:{" "}
+                  <span className="font-semibold">
+                    {formatNumber(user._count.posts)}
+                  </span>
+                </span>
+                <FollowerCount userId={user.id} initialState={followerInfo} />
+              </div>
+            </div>
           </div>
         </div>
-        {user.id === loggedInUserId ? (
-          <EditProfileButton user={user} />
-        ) : (
-          <FollowButton userId={user.id} initialState={followerInfo} />
+
+
+        <div className="flex items-end float-end my-1">
+
+          {user.id === loggedInUserId ? (
+            <EditProfileButton user={user} />
+          ) : (
+            <FollowButton userId={user.id} initialState={followerInfo} />
+          )}
+        </div>
+        <hr className="h-1 block bg-white m-0"/>
+      </div>
+      <div>
+
+        {user.bio && (
+          <>
+            <Linkify>
+              <div className="overflow-hidden whitespace-pre-line break-words text-white bg-red-500 p-1 rounded-sm">
+                {user.bio}
+              </div>
+            </Linkify>
+          </>
         )}
       </div>
-      {user.bio && (
-        <>
-          <hr />
-          <Linkify>
-            <div className="overflow-hidden whitespace-pre-line break-words">
-              {user.bio}
-            </div>
-          </Linkify>
-        </>
-      )}
     </div>
   );
 }

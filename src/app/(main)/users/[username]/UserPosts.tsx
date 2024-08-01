@@ -57,13 +57,13 @@ export default function UserPosts({ userId }: UserPostsProps) {
 
   return (
     <InfiniteScrollContainer
-      className="space-y-5"
+      className="space-y-3"
       onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
     >
       {posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}
-      {isFetchingNextPage && <div className="flex items-center justify-center mx-auto h-[100vh]">
+      {isFetchingNextPage && <div className="flex items-center justify-center mx-auto h-auto">
         <Loading />
       </div>}
     </InfiniteScrollContainer>
