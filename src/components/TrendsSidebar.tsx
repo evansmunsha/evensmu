@@ -12,8 +12,8 @@ import Loading from "@/app/(main)/loading";
 
 export default function TrendsSidebar() {
   return (
-    <div className="sticky top-[5.25rem] hidden h-fit w-72 flex-none space-y-5 md:block lg:w-80">
-      <Suspense fallback={<div className="flex items-center justify-center mx-auto h-[100vh]">
+    <div className="sticky top-[5.25rem] hidden h-fit w-72 flex-none space-y-2 md:block lg:w-80">
+      <Suspense fallback={<div className="flex items-center justify-center mx-auto h-[80vh]">
             <Loading />
           </div>}>
         <WhoToFollow />
@@ -44,8 +44,8 @@ async function WhoToFollow() {
   });
 
   return (
-    <div className="space-y-5 rounded-2xl bg-card p-5 shadow-sm">
-      <div className="text-xl font-bold">Who to follow</div>
+    <div className="space-y-3 rounded bg-card p-2 shadow-sm">
+      <div className="text-sm text-red-600 font-bold">People to follow</div>
       {usersToFollow.map((user) => (
         <div key={user.id} className="flex items-center justify-between gap-3">
           <UserTooltip user={user}>
@@ -104,8 +104,8 @@ async function TrendingTopics() {
   const trendingTopics = await getTrendingTopics();
 
   return (
-    <div className="space-y-5 rounded-2xl bg-card p-5 shadow-sm">
-      <div className="text-xl font-bold">Trending topics</div>
+    <div className="space-y-3 rounded bg-card p-2 shadow-sm">
+      <div className="text-lg font-bold">Trending topics</div>
       {trendingTopics.map(({ hashtag, count }) => {
         const title = hashtag.split("#")[1];
 

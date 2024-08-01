@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import SessionProvider from "./SessionProvider";
 import LeftMenuBar from "./LeftMenuBar";
 
+
 export default async function Layout({
   children,
 }: {

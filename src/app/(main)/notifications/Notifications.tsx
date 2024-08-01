@@ -76,13 +76,13 @@ export default function Notifications() {
 
   return (
     <InfiniteScrollContainer
-      className="space-y-5"
+      className="space-y-2"
       onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
     >
       {notifications.map((notification) => (
         <Notification key={notification.id} notification={notification} />
       ))}
-      {isFetchingNextPage && <div className="flex items-center justify-center mx-auto h-[100vh]">
+      {isFetchingNextPage && <div className="flex items-center justify-center mx-auto h-[80vh]">
           <Loading />
         </div>}
     </InfiniteScrollContainer>

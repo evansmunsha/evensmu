@@ -119,7 +119,7 @@ export default function NewChatDialog({
             </div>
           )}
           <hr />
-          <div className="h-96 overflow-y-auto">
+          <div className="h-auto scrollbar-hide overflow-y-auto">
             {isSuccess &&
               data.users.map((user) => (
                 <UserResult
@@ -140,7 +140,7 @@ export default function NewChatDialog({
                 No users found. Try a different name.
               </p>
             )}
-            {isFetching && <div className="flex items-center justify-center mx-auto h-[40vh]">
+            {isFetching && <div className="flex items-center justify-center mx-auto h-auto">
                 <Loading />
               </div>}
             {isError && (
@@ -183,7 +183,7 @@ function UserResult({ user, selected, onClick }: UserResultProps) {
           <p className="text-muted-foreground">@{user.username}</p>
         </div>
       </div>
-      {selected && <Check className="size-5 text-green-500" />}
+      {selected && <Check className="size-5 text-orange-500" />}
     </button>
   );
 }

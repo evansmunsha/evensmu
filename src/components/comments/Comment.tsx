@@ -36,7 +36,10 @@ export default function Comment({ comment }: CommentProps) {
             {formatRelativeDate(comment.createdAt)}
           </span>
         </div>
-        <div>{comment.content}</div>
+        <div className="bg-red-600 text-white px-1 w-full  rounded-r-lg  rounded-b rounded-l-lg rounded-bl-2xl rounded-tl-none">    
+          {comment.content}
+
+        </div>
       </div>
       {comment.user.id === user.id && (
         <CommentMoreButton

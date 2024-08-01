@@ -9,7 +9,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useDropzone } from "@uploadthing/react";
-import { ImageIcon, X } from "lucide-react";
+import { ImageIcon, ImagePlay, X } from "lucide-react";
 import Image from "next/image";
 import { ClipboardEvent, useRef } from "react";
 import { useSubmitPostMutation } from "./mutations";
@@ -44,7 +44,7 @@ export default function PostEditor() {
         italic: false,
       }),
       Placeholder.configure({
-        placeholder: "What's crack-a-lackin'?",
+        placeholder: "What's on your mined'?",
       }),
     ],
   });
@@ -77,14 +77,14 @@ export default function PostEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-5 rounded-2xl bg-card p-5 shadow-sm">
-      <div className="flex gap-5">
+    <div className="flex flex-col gap-3 rounded bg-card p-2 shadow-sm">
+      <div className="flex gap-3">
         <UserAvatar avatarUrl={user.avatarUrl} className="hidden sm:inline" />
         <div {...rootProps} className="w-full">
           <EditorContent
             editor={editor}
             className={cn(
-              "max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-background px-5 py-3",
+              "max-h-[20rem] w-full overflow-y-auto rounded bg-background px-5 py-3",
               isDragActive && "outline-dashed",
             )}
             onPaste={onPaste}
@@ -144,7 +144,7 @@ function AddAttachmentsButton({
         disabled={disabled}
         onClick={() => fileInputRef.current?.click()}
       >
-        <ImageIcon size={20} />
+        <ImagePlay size={25} />
       </Button>
       <input
         type="file"
@@ -212,10 +212,10 @@ function AttachmentPreview({
           alt="Attachment preview"
           width={500}
           height={500}
-          className="size-fit max-h-[30rem] rounded-2xl"
+          className="size-fit max-h-[30rem] rounded"
         />
       ) : (
-        <video controls className="size-fit max-h-[30rem] rounded-2xl">
+        <video controls className="size-fit max-h-[30rem] rounded">
           <source src={src} type={file.type} />
         </video>
       )}
