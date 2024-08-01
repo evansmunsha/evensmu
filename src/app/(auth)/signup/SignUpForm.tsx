@@ -41,7 +41,7 @@ export default function SignUpForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-1 h-auto">
         {error && <p className="text-center text-destructive">{error}</p>}
         <FormField
           control={form.control}
