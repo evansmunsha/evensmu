@@ -8,6 +8,8 @@ import { fileRouter } from "./api/uploadthing/core";
 import "./globals.css";
 import ReactQueryProvider from "./ReactQueryProvider";
 import { constructMetadata } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react"
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,6 +39,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Analytics />
           </ThemeProvider>
         </ReactQueryProvider>
         <Toaster />
