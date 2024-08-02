@@ -7,6 +7,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { fileRouter } from "./api/uploadthing/core";
 import "./globals.css";
 import ReactQueryProvider from "./ReactQueryProvider";
+import { constructMetadata } from "@/lib/utils";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,13 +18,7 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
 });
 
-export const metadata: Metadata = {
-  title: {
-    template: "%s | bugbook",
-    default: "bugbook",
-  },
-  description: "The social media app for powernerds",
-};
+export const metadata: Metadata = constructMetadata()
 
 export default function RootLayout({
   children,
