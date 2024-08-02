@@ -38,7 +38,7 @@ export function constructMetadata({
   title = 'evansbook a social business website and forum',
   description = 'evansbook is an open-source social business website and forum, where Participants could submit content such as links, text posts, images and videos, where others could follow a user they can like or dislike  a post or you can be chating with your friends. you can create an account now to start promoting your brand every day.',
   image = '/thumbnail.png',
-  icons = '/favicon.ico',
+  icons = '/thumbnail.png',
   noIndex = false,
 }: {
   title?: string
