@@ -113,7 +113,7 @@ export function useDeleteCommentMutation() {
               .map(c => ({
                 ...c,
                 replies: c.replies ? removeComment(c.replies as CommentData[]) : [],
-              }));
+              })); 
 
           return {
             ...oldData,
