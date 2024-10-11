@@ -33,7 +33,7 @@ export function useSubmitCommentMutation(postId: string) {
             if (newComment.parentId) {
               return comments.map(comment => {
                 const updatedComment = ensureCommentStructure(comment);
-                if (updatedComment.id === newComment.parentId) {
+                if (updatedComment.id === newComment?.parentId) {
                   return {
                     ...updatedComment,
                     replies: [ensureCommentStructure(newComment), ...updatedComment.replies],
