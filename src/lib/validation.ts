@@ -32,6 +32,9 @@ export const updateUserProfileSchema = z.object({
 
 export type UpdateUserProfileValues = z.infer<typeof updateUserProfileSchema>;
 
-export const createCommentSchema = z.object({
+
+export const CreateCommentSchema = z.object({
   content: requiredString,
+  postId: z.string().cuid(),
+  parentId: z.string().cuid().nullable().optional(),
 });

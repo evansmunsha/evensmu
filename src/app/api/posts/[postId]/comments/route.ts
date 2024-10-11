@@ -9,7 +9,6 @@ export async function GET(
 ) {
   try {
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
-
     const pageSize = 5;
 
     const { user } = await validateRequest();
@@ -19,18 +18,28 @@ export async function GET(
     }
 
     const comments = await prisma.comment.findMany({
-      where: { postId },
-      include: getCommentDataInclude(user.id),
-      orderBy: { createdAt: "asc" },
+      where: { 
+        postId,
+        parentId: null // This fetches only top-level comments
+      },
+      include: {
+        ...getCommentDataInclude(user.id),
+        replies: {
+          include: getCommentDataInclude(user.id),
+        },
+      },
+      orderBy: { createdAt: "desc" },
       take: -pageSize - 1,
       cursor: cursor ? { id: cursor } : undefined,
     });
 
-    const previousCursor = comments.length > pageSize ? comments[0].id : null;
+    const hasNextPage = comments.length > pageSize;
+    const nextCursor = hasNextPage ? comments[pageSize - 1].id : null;
 
     const data: CommentsPage = {
-      comments: comments.length > pageSize ? comments.slice(1) : comments,
-      previousCursor,
+      comments: comments.slice(0, pageSize),
+      nextCursor,
+      previousCursor: null,
     };
 
     return Response.json(data);

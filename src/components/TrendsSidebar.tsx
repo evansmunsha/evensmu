@@ -45,7 +45,7 @@ async function WhoToFollow() {
 
   return (
     <div className="space-y-3 rounded bg-card p-2 shadow-sm">
-      <div className="text-sm text-red-600 font-bold">People to follow</div>
+      <div className="text-sm text-red-600 font-bold">People you can follow</div>
       {usersToFollow.map((user) => (
         <div key={user.id} className="flex items-center justify-between gap-3">
           <UserTooltip user={user}>

@@ -2,7 +2,7 @@ import UserAvatar from "@/components/UserAvatar";
 import { NotificationData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { NotificationType } from "@prisma/client";
-import { HandHeart, MessagesSquare, UserPlus } from "lucide-react";
+import { HandHeart, MessageCircleReplyIcon, MessagesSquare, UserPlus } from "lucide-react";
 import Link from "next/link";
 
 interface NotificationProps {
@@ -29,6 +29,11 @@ export default function Notification({ notification }: NotificationProps) {
       icon: <HandHeart className="size-7 fill-red-500 text-white" />,
       href: `/posts/${notification.postId}`,
     },
+    REPLY: {
+      message: "",
+      icon: <MessageCircleReplyIcon className="size-7 fill-primary text-white" />,
+      href: `/posts/${notification.postId}`
+    }
   };
 
   const { message, icon, href } = notificationTypeMap[notification.type];

@@ -15,6 +15,11 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+enum VoteType {
+  UP
+  DOWN
+}
+
 model User {
   id                    String         @id
   username              String         @unique
@@ -30,17 +35,19 @@ model User {
   followers             Follow[]       @relation("Followers")
   likes                 Like[]
   bookmarks             Bookmark[]
-  comments              Comment[]
   receivedNotifications Notification[] @relation("Recipient")
   issuedNotifications   Notification[] @relation("Issuer")
+  comments              Comment[]
 
   createdAt DateTime @default(now())
-
+  
   @@map("users")
+  Reaction Reaction[]
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(cuid())
+  sessionToken String?   @unique
   userId    String
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -92,25 +99,38 @@ enum MediaType {
 }
 
 model Comment {
-  id      String @id @default(cuid())
-  content String
-  userId  String
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId  String
-  post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
+  id          String    @id @default(cuid())
+  content     String
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId      String
+  post        Post       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentId    String?
+  parent      Comment?   @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies     Comment[]  @relation("CommentReplies")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?  @updatedAt // Track when the comment was last updated
+  userLikes   String[]   @default([]) // Array of user IDs who liked the comment
+  isDeleted   Boolean    @default(false) // Indicates if the comment is deleted
+  isReported   Boolean    @default(false) // Indicates if the comment is reported
+  CommentHistory CommentHistory[]
+  likes Like[]
 
   @@map("comments")
+  Reaction Reaction[]
 }
 
 model Like {
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  id      String   @id @default(cuid()) // Make this optional if needed
+  userId  String?
+  user    User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId  String?  // Optional field for post likes
+  post    Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  commentId String? // Optional field for comment likes
+  comment Comment?  @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, postId])
+  @@unique([userId, postId]) // Unique constraint for post likes
+  @@unique([userId, commentId]) // Unique constraint for comment likes
   @@map("likes")
 }
 
@@ -147,4 +167,34 @@ enum NotificationType {
   LIKE
   FOLLOW
   COMMENT
+  REPLY
 }
+
+model CommentHistory {
+  id        String   @id @default(cuid())
+  commentId String
+  content   String
+  updatedAt DateTime @default(now())
+
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+}
+
+model Reaction {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  type      ReactionType
+
+  @@unique([userId, commentId]) // Ensure a user can only react once per comment
+}
+
+enum ReactionType {
+  LIKE
+  LOVE
+  LAUGH
+  SAD
+  ANGRY
+}
+

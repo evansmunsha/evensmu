@@ -3,20 +3,22 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { getCommentDataInclude, PostData } from "@/lib/types";
-import { createCommentSchema } from "@/lib/validation";
+import { CreateCommentSchema } from "@/lib/validation";
 
 export async function submitComment({
   post,
   content,
+  parentId,
 }: {
   post: PostData;
   content: string;
+  parentId?: string | null;
 }) {
   const { user } = await validateRequest();
 
   if (!user) throw new Error("Unauthorized");
 
-  const { content: contentValidated } = createCommentSchema.parse({ content });
+  const { content: contentValidated } = CreateCommentSchema.parse({ content, postId: post.id, parentId });
 
   const [newComment] = await prisma.$transaction([
     prisma.comment.create({
@@ -24,6 +26,7 @@ export async function submitComment({
         content: contentValidated,
         postId: post.id,
         userId: user.id,
+        parentId,
       },
       include: getCommentDataInclude(user.id),
     }),
@@ -35,6 +38,18 @@ export async function submitComment({
               recipientId: post.user.id,
               postId: post.id,
               type: "COMMENT",
+            },
+          }),
+        ]
+      : []),
+    ...(parentId
+      ? [
+          prisma.notification.create({
+            data: {
+              issuerId: user.id,
+              recipientId: post.user.id,
+              postId: post.id,
+              type: "REPLY",
             },
           }),
         ]

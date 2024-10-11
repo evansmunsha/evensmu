@@ -74,6 +74,28 @@ export function getCommentDataInclude(loggedInUserId: string) {
     user: {
       select: getUserDataSelect(loggedInUserId),
     },
+    replies: {
+      include: {
+        user: {
+          select: getUserDataSelect(loggedInUserId),
+        },
+      },
+    },
+    likes: {
+      where: {
+        userId: loggedInUserId,
+      },
+      select: {
+        userId: true,
+      },
+    },
+    
+    _count: {
+      select: {
+        likes: true,
+        replies: true,
+      },
+    },
   } satisfies Prisma.CommentInclude;
 }
 
@@ -84,6 +106,7 @@ export type CommentData = Prisma.CommentGetPayload<{
 export interface CommentsPage {
   comments: CommentData[];
   previousCursor: string | null;
+  nextCursor: string | null;
 }
 
 export const notificationsInclude = {

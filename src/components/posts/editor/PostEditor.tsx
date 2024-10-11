@@ -44,7 +44,7 @@ export default function PostEditor() {
         italic: false,
       }),
       Placeholder.configure({
-        placeholder: "What's on your mined'?",
+        placeholder: "What's on your thought'?",
       }),
     ],
   });
