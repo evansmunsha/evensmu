@@ -7,9 +7,9 @@ import UserTooltip from "../UserTooltip";
 import CommentMoreButton from "./CommentMoreButton";
 import { useState } from "react";
 import CommentInput from "./CommentInput"; // Make sure to import CommentInput
-import Modal from "./Modal";
+import Modal from "./Modal";  // Assume we have a Modal component
+
 import LikeButton from "../posts/LikeButton";
- // Assume we have a Modal component
 
 interface CommentProps {
   comment: CommentData;
