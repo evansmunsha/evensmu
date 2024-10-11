@@ -112,7 +112,7 @@ export function useDeleteCommentMutation() {
             comments.filter(c => c.id !== deletedComment.id)
               .map(c => ({
                 ...c,
-                replies: c.replies ? removeComment(c.replies) : [],
+                replies: c.replies ? removeComment(c.replies as CommentData[]) : [],
               }));
 
           return {
