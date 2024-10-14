@@ -11,11 +11,12 @@ import StarterKit from "@tiptap/starter-kit";
 import { useDropzone } from "@uploadthing/react";
 import { ImageIcon, ImagePlay, X } from "lucide-react";
 import Image from "next/image";
-import { ClipboardEvent, useRef } from "react";
+import { ClipboardEvent, useRef, useState } from "react";
 import { useSubmitPostMutation } from "./mutations";
 import "./styles.css";
 import useMediaUpload, { Attachment } from "./useMediaUpload";
 import Loading from "@/app/(main)/loading";
+import Link from "next/link";
 
 export default function PostEditor() {
   const { user } = useSession();
@@ -44,7 +45,7 @@ export default function PostEditor() {
         italic: false,
       }),
       Placeholder.configure({
-        placeholder: "What's on your thought'?",
+        placeholder: "Share your thoughts or media...",
       }),
     ],
   });
@@ -53,6 +54,8 @@ export default function PostEditor() {
     editor?.getText({
       blockSeparator: "\n",
     }) || "";
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   function onSubmit() {
     mutation.mutate(
@@ -64,6 +67,10 @@ export default function PostEditor() {
         onSuccess: () => {
           editor?.commands.clearContent();
           resetMediaUploads();
+          setErrorMessage(null); // Clear any previous error
+        },
+        onError: (error) => {
+          setErrorMessage("Failed to submit post. Please try again.");
         },
       },
     );
@@ -79,7 +86,10 @@ export default function PostEditor() {
   return (
     <div className="flex flex-col gap-3 rounded bg-card p-2 shadow-sm">
       <div className="flex gap-3">
+        <Link href={`/users/${user?.username}`}>
+        
         <UserAvatar avatarUrl={user.avatarUrl} className="hidden sm:inline" />
+        </Link>
         <div {...rootProps} className="w-full">
           <EditorContent
             editor={editor}
@@ -116,10 +126,12 @@ export default function PostEditor() {
           loading={mutation.isPending}
           disabled={!input.trim() || isUploading}
           className="min-w-20"
+          aria-label="Submit post"
         >
           Post
         </LoadingButton>
       </div>
+      {errorMessage && <div className="text-red-500">{errorMessage}</div>}
     </div>
   );
 }
@@ -143,6 +155,7 @@ function AddAttachmentsButton({
         className="text-primary hover:text-primary"
         disabled={disabled}
         onClick={() => fileInputRef.current?.click()}
+        title="Add attachments (images or videos)"
       >
         <ImagePlay size={25} />
       </Button>

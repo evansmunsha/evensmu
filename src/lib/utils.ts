@@ -67,7 +67,7 @@ export function constructMetadata({
       creator: '@evansensteen',
     },
     icons,
-    metadataBase: new URL('https://evansbook.vercel.app/'),
+    metadataBase: new URL('https://evensme.vercel.app/'),
     ...(noIndex && {
       robots: {
         index: false,

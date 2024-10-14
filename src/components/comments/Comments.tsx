@@ -31,15 +31,7 @@ export default function Comments({ post }: CommentsProps) {
   const renderComment = (comment: CommentData) => (
     <div key={comment.id} className="mb-4">
       <Comment comment={comment} post={post} />
-      {comment.replies && comment.replies.length > 0 && (
-        <div className="mt-2">
-          {comment.replies.map((reply) => (
-            <div key={reply.id} className="mb-4">
-              <Comment comment={reply as CommentData} post={post} />
-            </div>
-          ))}
-        </div>
-      )}
+      
     </div>
   );
 

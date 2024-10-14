@@ -13,6 +13,7 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import EditProfileButton from "./EditProfileButton";
 import UserPosts from "./UserPosts";
+import React from "react";
 
 interface PageProps {
   params: { username: string };
@@ -27,7 +28,7 @@ const getUser = cache(async (username: string, loggedInUserId: string) => {
       },
     },
     select: getUserDataSelect(loggedInUserId),
-  });
+  })
 
   if (!user) notFound();
 
@@ -45,6 +46,8 @@ export async function generateMetadata({
 
   return {
     title: `${user.displayName} (@${user.username})`,
+    description: `${user.displayName}'s profile on our platform.`,
+    keywords: 'user profile, social media, follow',
   };
 }
 
@@ -82,7 +85,7 @@ interface UserProfileProps {
   loggedInUserId: string;
 }
 
-async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
+const UserProfile = React.memo(({ user, loggedInUserId }: UserProfileProps) => {
   const followerInfo: FollowerInfo = {
     followers: user._count.followers,
     isFollowedByUser: user.followers.some(
@@ -100,6 +103,7 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
             size={250}
             className="size-full max-h-32 max-w-32 rounded-full"
           />
+          
 
 
           <div className="flex flex-wrap items-end justify-end gap-3 sm:flex-nowrap flex-1">
@@ -147,4 +151,4 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
       </div>
     </div>
   );
-}
+});

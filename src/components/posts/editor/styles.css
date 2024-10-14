@@ -9,3 +9,10 @@
 .tiptap.ProseMirror {
   outline: none;
 }
+
+/* Add to your styles.css */
+@media (max-width: 640px) {
+  .min-w-20 {
+    min-width: 100%; /* Make buttons full width on small screens */
+  }
+}

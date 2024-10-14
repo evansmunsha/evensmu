@@ -35,6 +35,7 @@ export function useUpdateProfileMutation() {
     },
     onSuccess: async ([updatedUser, uploadResult]) => {
       const newAvatarUrl = uploadResult?.[0].serverData.avatarUrl;
+      const newAvatarUrls = uploadResult?.[0].serverData.coverUrl;
 
       const queryFilter: QueryFilters = {
         queryKey: ["post-feed"],
@@ -58,6 +59,7 @@ export function useUpdateProfileMutation() {
                     user: {
                       ...updatedUser,
                       avatarUrl: newAvatarUrl || updatedUser.avatarUrl,
+                      coverUrl: newAvatarUrls || updatedUser.coverUrl,
                     },
                   };
                 }

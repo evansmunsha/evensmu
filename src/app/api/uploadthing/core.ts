@@ -8,7 +8,7 @@ const f = createUploadthing();
 
 export const fileRouter = {
   avatar: f({
-    image: { maxFileSize: "512KB" },
+    image: { maxFileSize: "4MB" },
   })
     .middleware(async () => {
       const { user } = await validateRequest();
@@ -38,6 +38,7 @@ export const fileRouter = {
           where: { id: metadata.user.id },
           data: {
             avatarUrl: newAvatarUrl,
+            coverUrl: newAvatarUrl
           },
         }),
         streamServerClient.partialUpdateUser({
@@ -48,11 +49,11 @@ export const fileRouter = {
         }),
       ]);
 
-      return { avatarUrl: newAvatarUrl };
+      return { avatarUrl: newAvatarUrl, coverUrl: newAvatarUrl };
     }),
   attachment: f({
     image: { maxFileSize: "4MB", maxFileCount: 5 },
-    video: { maxFileSize: "256MB", maxFileCount: 5 },
+    video: { maxFileSize: "32MB", maxFileCount: 5 },
   })
     .middleware(async () => {
       const { user } = await validateRequest();

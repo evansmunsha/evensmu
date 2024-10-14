@@ -65,16 +65,16 @@ export default function Comment({ comment, depth = 0, post }: CommentProps) {
           )}
         </div>
         <div className="mt-2 flex gap-4">
-        <div className="flex items-center gap-5">
-          <LikeButton
-            postId={comment?.id}
-            initialState={{
-              likes: comment?._count?.likes,
-              isLikedByUser: comment?.likes?.some((like) => like?.userId === user?.id),
-            }}
-          />
-          
-        </div>
+          <div className="flex items-center gap-5">
+            <LikeButton
+              postId={comment?.id}
+              initialState={{
+                likes: comment?._count?.likes,
+                isLikedByUser: comment?.likes?.some((like) => like?.userId === user?.id),
+              }}
+            />
+            
+          </div>
           <button 
             className="text-sm text-blue-500 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" // Improved focus styles
             onClick={() => setIsReplying(!isReplying)}
