@@ -208,7 +208,7 @@ function MediaPreview({ media }: MediaPreviewProps) {
   if (media.type === "VIDEO") {
     return (
       <div className="relative">
-        {isLoading && <div className="absolute inset-0 flex items-center justify-center bg-gray-200"><span>Loading...</span></div>}
+        
         <video
           ref={videoRef}
           src={media.url}
