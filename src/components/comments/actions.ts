@@ -42,7 +42,7 @@ export async function submitComment({
           }),
         ]
       : []),
-    ...(parentId
+    ...(parentId !== user.id
       ? [
           prisma.notification.create({
             data: {
