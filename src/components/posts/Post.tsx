@@ -177,16 +177,19 @@ function MediaPreview({ media }: MediaPreviewProps) {
       threshold: 0.5, // Adjust this value as needed
     });
 
-    if (videoRef.current) {
-      observerRef.current.observe(videoRef.current);
+    const currentVideo = videoRef.current; // Copy the ref value to a variable
+
+    if (currentVideo) {
+      observerRef.current.observe(currentVideo);
     }
 
+    // Cleanup function
     return () => {
-      if (videoRef.current && observerRef.current) {
-        observerRef.current.unobserve(videoRef.current);
+      if (currentVideo && observerRef.current) {
+        observerRef.current.unobserve(currentVideo);
       }
     };
-  }, [videoRef]);
+  }, []); // Add dependencies as needed
 
   if (media.type === "IMAGE") {
     return (
@@ -210,7 +213,7 @@ function MediaPreview({ media }: MediaPreviewProps) {
           ref={videoRef}
           src={media.url}
           controls
-          className="w-[100%] max-h-[20.9rem] rounded-xl transition-transform "
+          className="w-[100%] max-h-[20.9rem] rounded-xl transition-transform"
           aria-label="Video attachment"
           onLoadStart={handleLoad}
           onError={handleError}

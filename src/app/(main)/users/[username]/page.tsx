@@ -152,3 +152,5 @@ const UserProfile = React.memo(({ user, loggedInUserId }: UserProfileProps) => {
     </div>
   );
 });
+
+UserProfile.displayName = "UserProfile"; // Set display name explicitly
