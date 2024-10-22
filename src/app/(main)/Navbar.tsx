@@ -3,27 +3,34 @@ import UserButton from "@/components/UserButton";
 import Image from "next/image";
 import Link from "next/link";
 import MenuBar from "./MenuBar";
+import { UserPlus } from "lucide-react";
 
 export default function Navbar() {
   return (
     <header className="sticky top-0 z-10 bg-card shadow-sm mb-2">
-      <div className="flex items-center justify-between gap-5 px-5 py-3">
+      <div className="flex items-center justify-between gap-2 px-5 py-3">
         {/* Logo */}
-        <Link href='/' className='flex gap-1 items-center'>
+        <Link href='/' className='flex gap-1 items-center' aria-label="Go to Evensme homepage">
           <Image 
             src='/thumbnail.png' 
             width={40} 
             height={40} 
-            alt='Evensme Logo'
-            className='text-red-600 animate-bounce rounded-full' 
+            alt='Evensme Logo' 
+            className='animate-bounce rounded-full' 
           />
-          <span className='hidden text-xl mb-3 items-center justify-center font-medium md:flex'>
-            <b className='flex w-0 h-0 font-bold animate-spin text-orange-500 mr-1 text-3xl'>e</b>
-            <b className='-m-1 text-red-600 text-xl flex animate-bounce'>evensme</b>
+          <span className='hidden md:flex flex-col items-start mr-2'>
+            <b className='text-red-600 text-xl animate-bounce'>vensme</b>
           </span>
         </Link>
+        
+        {/* Search Field */}
         <SearchField />
+        {/* Menu Bar */}
         <MenuBar className="hidden sm:flex flex-row" />
+          <Link href={'/tofollow'}>
+            <UserPlus />
+          </Link>
+        {/* User Button */}
         <UserButton />
       </div>
     </header>

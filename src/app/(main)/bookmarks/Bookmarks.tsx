@@ -53,7 +53,7 @@ export default function Bookmarks() {
 
   return (
     <InfiniteScrollContainer
-      className="space-y-3"
+      className="space-y-0.5"
       onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
     >
       {posts.map((post) => (

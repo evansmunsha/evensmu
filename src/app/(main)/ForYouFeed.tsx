@@ -52,14 +52,19 @@ export default function ForYouFeed() {
   }
 
   return (
-    <InfiniteScrollContainer
-      className="space-y-5"
-      onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
-    >
-      {posts.map((post) => (
-        <Post key={post.id} post={post} />
-      ))}
-      {isFetchingNextPage && <Loading />}
-    </InfiniteScrollContainer>
+    <div className="flex">
+      <div className="flex-grow">
+        <InfiniteScrollContainer
+          className="space-y-0.5"
+          onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
+        >
+          {posts.map((post) => (
+            <Post key={post.id} post={post} />
+          ))}
+          {isFetchingNextPage && <Loading />}
+        </InfiniteScrollContainer>
+      </div>
+      
+    </div>
   );
 }

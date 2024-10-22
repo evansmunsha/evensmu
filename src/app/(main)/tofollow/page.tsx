@@ -1,36 +1,25 @@
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
-import { unstable_cache } from "next/cache";
-import { getUserDataSelect } from "@/lib/types";
-import { formatNumber } from "@/lib/utils";
-import Link from "next/link";
-import { Suspense } from "react";
-import FollowButton from "./FollowButton";
-import UserAvatar from "./UserAvatar";
-import UserTooltip from "./UserTooltip";
-import Loading from "@/app/(main)/loading";
+import { validateRequest } from '@/auth'
+import FollowButton from '@/components/FollowButton'
+import UserAvatar from '@/components/UserAvatar'
+import UserTooltip from '@/components/UserTooltip'
+import prisma from '@/lib/prisma'
+import { getUserDataSelect } from '@/lib/types'
+import { formatNumber } from '@/lib/utils'
+import { unstable_cache } from 'next/cache'
+import Link from 'next/link'
+import React from 'react'
 
-export default function TrendsSidebar() {
+const page = () => {
   return (
-    <div className="sticky top-[5.25rem] hidden h-fit w-full max-w-xs flex-none space-y-2 md:block lg:max-w-sm">
-      <Suspense fallback={<LoadingIndicator />}>
-        <WhoToFollow />
-        <TrendingTopics />
-      </Suspense>
+    <div className='flex  justify-center items-center bg-slate-500 h-fit'>
+      <WhoToFollow/>
     </div>
-  );
+  )
 }
 
-// Loading Indicator Component
-function LoadingIndicator() {
-  return (
-    <div className="flex items-center justify-center mx-auto h-[80vh]">
-      <Loading />
-    </div>
-  );
-}
+export default page
 
-export async function WhoToFollow() {
+async function WhoToFollow() {
   const { user } = await validateRequest();
 
   if (!user) return null;
@@ -51,20 +40,22 @@ export async function WhoToFollow() {
   });
 
   return (
-    <div className="space-y-3 rounded bg-card p-2 shadow-sm">
-      <div className="text-sm text-red-600 font-bold">People you may know</div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 bg-card rounded shadow-sm w-full">
+      <div className="col-span-full text-sm text-red-600 font-bold mb-2">
+      People you may know
+      </div>
       {usersToFollow.length === 0 ? (
-        <p className="text-gray-500">No suggestions available.</p>
+        <p className="text-gray-500 w-full">No suggestions available.</p>
       ) : (
         usersToFollow.map((user) => (
-          <div key={user.id} className="flex items-center justify-between gap-3">
+          <div key={user.id} className="flex items-center justify-between gap-2 p-2 border rounded bg-white shadow-sm">
             <UserTooltip user={user}>
               <Link
                 href={`/users/${user.username}`}
-                className="flex items-center gap-3"
+                className="flex items-center gap-2"
                 aria-label={`View profile of ${user.displayName}`}
               >
-                <UserAvatar avatarUrl={user.avatarUrl} className="flex-none" />
+                <UserAvatar avatarUrl={user.avatarUrl} className="flex-none rounded-none" />
                 <div>
                   <p className="line-clamp-1 break-all font-semibold hover:underline">
                     {user.displayName}
@@ -99,9 +90,9 @@ const getTrendingTopics = unstable_cache(
             FROM posts
             GROUP BY (hashtag)
             ORDER BY count DESC, hashtag ASC
-            LIMIT 5
+            LIMIT 7
         `;
-
+  
     return result.map((row) => ({
       hashtag: row.hashtag,
       count: Number(row.count),
@@ -113,9 +104,9 @@ const getTrendingTopics = unstable_cache(
   },
 );
 
-export async function TrendingTopics() {
+async function TrendingTopics() {
   const trendingTopics = await getTrendingTopics();
-
+  
   return (
     <div className="space-y-2 rounded bg-card p-2 shadow-sm">
       <div className="text-lg font-bold">Trending topics</div>
@@ -124,7 +115,7 @@ export async function TrendingTopics() {
       ) : (
         trendingTopics.map(({ hashtag, count }) => {
           const title = hashtag.split("#")[1];
-
+  
           return (
             <Link key={title} href={`/hashtag/${title}`} className="block" aria-label={`View posts for ${hashtag}`}>
               <p

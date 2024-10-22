@@ -47,9 +47,9 @@ export async function submitComment({
           prisma.notification.create({
             data: {
               issuerId: user.id,
+              postId: parentId,
               recipientId: post.user.id,
-              postId: post.id,
-              type: "REPLY",
+              type: "COMMENT",
             },
           }),
         ]

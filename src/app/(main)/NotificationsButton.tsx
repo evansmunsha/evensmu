@@ -27,7 +27,7 @@ export default function NotificationsButton({
   return (
     <Button
       variant="ghost"
-      className="flex items-center justify-start gap-3"
+      className="flex items-center justify-start gap-1.5"
       title="Notifications"
       asChild
     >

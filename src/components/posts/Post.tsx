@@ -15,6 +15,7 @@ import UserTooltip from "../UserTooltip";
 import BookmarkButton from "./BookmarkButton";
 import LikeButton from "./LikeButton";
 import PostMoreButton from "./PostMoreButton";
+import SidebarSuggestions from "../SidebarSuggestions";
 
 interface PostProps {
   post: PostData;
@@ -29,7 +30,7 @@ export default function Post({ post }: PostProps) {
   const MAX_LENGTH = 200; // Set your desired maximum length here
 
   return (
-    <article className="group/post space-y-3 bg-card py-5 px-0.5 shadow-sm">
+    <article className="group/post space-y-3 bg-card py-0.5 px-0.5 shadow-sm">
       <div className="flex justify-between gap-3">
         <div className="flex flex-wrap gap-3">
           <UserTooltip user={post?.user}>
@@ -113,6 +114,8 @@ export default function Post({ post }: PostProps) {
         />
       </div>
       {showComments && <Comments post={post} />}
+
+      
     </article>
   );
 }
@@ -199,7 +202,7 @@ function MediaPreview({ media }: MediaPreviewProps) {
           alt="Attachment"
           width={1000}
           height={500}
-          className="max-h-[30rem] rounded-xl transition-transform "
+          className="max-h-[30rem] rounded-xl transition-transform z-10"
         />
       </div>
     );
@@ -213,7 +216,7 @@ function MediaPreview({ media }: MediaPreviewProps) {
           ref={videoRef}
           src={media.url}
           controls
-          className="w-[100%] max-h-[20.9rem] rounded-xl transition-transform"
+          className="w-[100%] max-h-[20.9rem] rounded-xl transition-transform z-10"
           aria-label="Video attachment"
           onLoadStart={handleLoad}
           onError={handleError}

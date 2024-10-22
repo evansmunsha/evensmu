@@ -30,7 +30,7 @@ export default async function MenuBar({ className }: MenuBarProps) {
     <div className={className}>
       <Button
         variant="ghost"
-        className="flex items-center justify-start gap-3"
+        className="flex items-center justify-start gap-1.5"
         title="Home"
         asChild
       >
@@ -45,7 +45,7 @@ export default async function MenuBar({ className }: MenuBarProps) {
       <MessagesButton initialState={{ unreadCount: unreadMessagesCount }} />
       <Button
         variant="ghost"
-        className="flex items-center justify-start gap-3"
+        className="flex items-center justify-start gap-1.5"
         title="Bookmarks"
         asChild
       >
