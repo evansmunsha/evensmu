@@ -15,7 +15,6 @@ import UserTooltip from "../UserTooltip";
 import BookmarkButton from "./BookmarkButton";
 import LikeButton from "./LikeButton";
 import PostMoreButton from "./PostMoreButton";
-import SidebarSuggestions from "../SidebarSuggestions";
 
 interface PostProps {
   post: PostData;
